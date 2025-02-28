@@ -56,4 +56,4 @@ def get_configs() -> Dict[str, str]:
 
 def save_configs(c: Dict[str, str]):
     with open(CONFIG_FILE, "wt") as f:
-        json.dump(c, f)
+        json.dump(c, f, sort_keys=True, indent=4)
