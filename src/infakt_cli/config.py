@@ -1,11 +1,11 @@
 import os
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 import json
 import sys
 
 
-XDG_CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME")) or Path("~/.config")
+XDG_CONFIG_HOME = Path(os.environ.get("XDG_CONFIG_HOME", "~/.config"))
 CONFIG_FILE: Path = XDG_CONFIG_HOME / ".infakt_cli"
 CONFIG_ACTIONS = ["list", "add"]
 CONFIG_KEYS = ["API_KEY"]
@@ -33,7 +33,7 @@ def add_config(args):
     print("Configs updated succesfully!")
 
 
-def list_configs(args):
+def list_configs(_):
     conf = get_configs()
     if conf is None:
         print(
@@ -43,7 +43,7 @@ def list_configs(args):
     print(conf)
 
 
-def get_configs() -> Dict[str, str]:
+def get_configs() -> Optional[Dict[str, str]]:
     try:
         with open(CONFIG_FILE) as f:
             return json.load(f)
